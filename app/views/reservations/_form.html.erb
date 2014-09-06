@@ -1,0 +1,17 @@
+<%= form_for([@restaurant, @reservation]) do |f| %>       
+  <%= render 'shared/form_header', :errors => @reservation.errors %>
+  <div class="field">
+    <%= f.label :date_and_time %><br/>
+    <%= f.datetime_select :date_and_time %>
+  </div>
+  <div class="field">
+    <%= f.label :size %><br/>
+    <%= f.number_field :size %>
+  </div>
+  <div class="actions">
+    <% if @reservation.errors.any? %>
+      <p class="error">Please, make sure all fields are correct before submitting</p> 
+    <% end %>
+    <%= f.submit %>
+  </div>
+<% end %>

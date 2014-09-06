@@ -1,0 +1,28 @@
+<h1>Restaurant details</h1>
+<%= link_to "Edit", edit_restaurant_path(@restaurant), title: "Change this restaurants's details" %>
+<%= link_to 'Delete', restaurant_path(@restaurant), title: "Delete this restaurant", :'data-method' => 'delete' %>
+<%= render 'restaurants/restaurant', :restaurant => @restaurant %>
+
+<%  num_reservations = @restaurant.reservations.count
+    if num_reservations > 0 
+%>
+  <h2 id="reviews"><%= num_reservations %> Reservations</h2>
+  <% @restaurant.reservations.each do |reservation| %>
+    <% if current_user && reservation.id %>
+      <%= link_to 'Edit', edit_restaurant_reservation_path(@restaurant, reservation), title: "Change this reservation" %>
+      <%= link_to 'Delete', restaurant_reservation_path(@restaurant, reservation), title: "Delete this reservation", :'data-method' => 'delete' %>
+    <% end %>
+    <p><%= reservation.date_and_time %> for <%= pluralize(reservation.size, "person") %></p>
+  <% end %>
+  <h3>New reservation</h3>
+<% else %>
+  <h2>New reservation</h2>
+  <p>Be the first to book with this restaurant!</p>
+<% end %>
+
+<!-- Show reservation form only if logged in -->
+<% if current_user %>
+  <%= render 'reservations/form' %>
+<% else %>
+  <p>Please <%= login_link %> or <%= signup_link %> to make a reservation.</p>
+<% end %>

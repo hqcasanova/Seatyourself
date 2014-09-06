@@ -1,14 +1,66 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Seatyourself</title>
+  <title>
+    SeatYourself: 
+    <%= page_titles "OpenTable alternative" %>
+  </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,300,400italic,400,600italic,600,700italic,700,800italic,800" rel="stylesheet" type="text/css">
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
+
 <body>
+<header>
+    <!-- Logo and link to home -->
+    <h1>
+      <%= link_to root_path do %>
+        <%= image_tag "opentable.png", alt: "Opentable logo" %>
+        SeatYourself
+      <% end %>
+    </h1>
 
-<%= yield %>
+    <%= breadcrumbs ['sessions', 'users'] %>
+    
+    <!-- Login/Sign up/Logout links -->
+    <span class="userinfo">
+      <% if !current_user %>
+        <%= login_link %><%= signup_link %>      
+      <% else %>
+        Signed in as <%= current_user.username %>. <%= link_to "Log out", session_path("current"), :method => :delete %>
+      <% end %> 
+    </span>
 
+    <!-- Notices and alerts -->
+    <% if flash[:notice] %>
+      <span class="notice"><%= flash[:notice] %></span>
+    <% end %>
+    <% if flash[:alert] %>
+      <span class="alert"><%= flash[:alert] %></span>
+    <% end %>
+
+  </header>
+
+  <section>
+    <%= yield %> 
+
+    <!-- Cancel link for forms only -->
+    <%= cancel_form %>
+
+  </section>
+
+  <footer>
+    <address>
+      <a class="email" title="Email us" href="mailto:feedback@rainforest.com">feedback@rainforest.com</a>
+      <a class="phone" title="Call us" href="tel:+1128725674">+1 647 4985904</a>
+    </address>
+
+    <a rel="license" title="Human-readable summary of CC BY-NC-SA license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/deed.en_GB" target="_blank">
+      <small property="dc:publisher">Hector Casanova</small>
+      <small property="dc:dateCopyrighted">2014</small>
+    </a>
+  </footer>
 </body>
 </html>

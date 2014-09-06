@@ -1,0 +1,6 @@
+<h1>Edit reservation</h1>
+<% if current_user %>
+  <%= render 'form' %>
+<% else %>
+  <p>Please <%= login_link %> to change this reservation.</p>
+<% end %>

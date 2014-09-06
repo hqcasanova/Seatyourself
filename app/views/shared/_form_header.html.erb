@@ -1,0 +1,10 @@
+<% if errors.any? %>
+  <h2 class="error">
+    <%= pluralize(errors.count, "error") %> found:
+  </h2>
+  <ul class="error">
+    <% errors.full_messages.each do |error_msg| %>
+      <li><%= error_msg %></li> 
+    <% end %> 
+  </ul>
+<% end %>

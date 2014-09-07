@@ -20,7 +20,7 @@ class ReservationsController < ApplicationController
 
   def update 
     if @reservation.update_attributes(secure_params(:reservation, RESERVATION_ATTR))
-      redirect_to current_reservation, notice: 'Reservation updated successfully'
+      redirect_to current_restaurant, notice: 'Reservation updated successfully'
     else
       flash.now['alert'] = 'Failure when updating reservation'
       render :edit
@@ -33,7 +33,7 @@ class ReservationsController < ApplicationController
   end
 
   private
-  def load_review
+  def load_reservation
     @reservation = Reservation.find(params[:id])
   end
 

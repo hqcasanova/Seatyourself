@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
-  USER_ATTR = [:name, :username, :email, :password, :password_confirmation]
+  USER_ATTR = [:name, :username, :email, :password, :password_confirmation, :time_zone]
+
   def new
     @user = User.new
   end

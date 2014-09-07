@@ -6,13 +6,15 @@
 <%  num_reservations = @restaurant.reservations.count
     if num_reservations > 0 
 %>
-  <h2 id="reviews"><%= num_reservations %> Reservations</h2>
+  <h2 id="reservations"><%= num_reservations %> Reservations</h2>
   <% @restaurant.reservations.each do |reservation| %>
     <% if current_user && reservation.id %>
       <%= link_to 'Edit', edit_restaurant_reservation_path(@restaurant, reservation), title: "Change this reservation" %>
       <%= link_to 'Delete', restaurant_reservation_path(@restaurant, reservation), title: "Delete this reservation", :'data-method' => 'delete' %>
     <% end %>
-    <p><%= reservation.date_and_time %> for <%= pluralize(reservation.size, "person") %></p>
+    <% if reservation.user != nil %>
+      <p><%= formatted_datetime(reservation.date_and_time) %> for <%= pluralize(reservation.size, "person") %></p>
+    <% end %>
   <% end %>
   <h3>New reservation</h3>
 <% else %>

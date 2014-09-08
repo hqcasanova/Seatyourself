@@ -1,6 +1,10 @@
 <h1>Restaurant details</h1>
-<%= link_to "Edit", edit_restaurant_path(@restaurant), title: "Change this restaurants's details" %>
-<%= link_to 'Delete', restaurant_path(@restaurant), title: "Delete this restaurant", :'data-method' => 'delete' %>
+<% if current_user %>
+  <%= link_to "Edit", edit_restaurant_path(@restaurant), title: "Change this restaurants's details" %>
+  <%= link_to 'Delete', restaurant_path(@restaurant), title: "Delete this restaurant", :'data-method' => 'delete' %>
+<% else %>
+  <p>Please <%= login_link %> or <%= signup_link %> to change a restaurant.</p>
+<% end %>
 <%= render 'restaurants/restaurant', :restaurant => @restaurant %>
 
 <%  num_reservations = @restaurant.reservations.count

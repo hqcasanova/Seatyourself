@@ -3,4 +3,9 @@
   <p>See all restaurants sorted by cuisine</p>
 <% end %>
 <%= render @restaurants %>
-<%= link_to "New restaurant", new_restaurant_path %>
+<% if current_user %>
+  <%= link_to "New restaurant", new_restaurant_path %>
+<% else %>
+  <p>Please <%= login_link %> or <%= signup_link %> to add a restaurant.</p>
+<% end %>
+

@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20140907143414) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "cuisines", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
@@ -33,8 +36,8 @@ ActiveRecord::Schema.define(version: 20140907143414) do
     t.datetime "updated_at"
   end
 
-  add_index "reservations", ["restaurant_id"], name: "index_reservations_on_restaurant_id"
-  add_index "reservations", ["user_id"], name: "index_reservations_on_user_id"
+  add_index "reservations", ["restaurant_id"], name: "index_reservations_on_restaurant_id", using: :btree
+  add_index "reservations", ["user_id"], name: "index_reservations_on_user_id", using: :btree
 
   create_table "restaurants", force: true do |t|
     t.string   "name"

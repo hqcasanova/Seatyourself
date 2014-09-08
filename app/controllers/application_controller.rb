@@ -2,8 +2,10 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
-  around_filter :to_user_tz, if: :current_user
+  around_filter :to_user_tz, if: :current_user    #around because you don't want the user's time zone to sort of leak into db ops, for example
 
+  #TODO: Tries to guess the previous page based on the referrer and controller name
+  #Still buggy
   def back_url
     if (controller_name == 'sessions') || (controller_name == 'users')
       url = controller_name + '/new'

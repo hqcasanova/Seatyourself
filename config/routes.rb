@@ -1,15 +1,17 @@
 Rails.application.routes.draw do
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'pages#index'
+  root 'restaurants#index'
   get '/reservations' => 'reservations#index', as: :reservations
   resources :restaurants do 
     resources :reservations, only: [:edit, :create, :update, :destroy]
   end
   resources :users, only: [:new, :create]
   resources :sessions, only: [:new, :create, :destroy]
+  resources :cuisines, only: [:index, :show], param: :name
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

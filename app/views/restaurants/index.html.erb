@@ -1,3 +1,6 @@
-<h1>Restaurants</h1>
+<%= link_to cuisines_path, title: 'List all participating restaurants by cuisine' do %>
+  <h1>OpenTable <span>alternative</span></h1>
+  <p>See all restaurants sorted by cuisine</p>
+<% end %>
 <%= render @restaurants %>
 <%= link_to "New restaurant", new_restaurant_path %>

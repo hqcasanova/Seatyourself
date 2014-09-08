@@ -13,6 +13,7 @@ class ReservationsController < ApplicationController
   end
 
   def edit
+    cookies[:url_before_edit] = request.referrer
   end
 
   def create
@@ -26,9 +27,15 @@ class ReservationsController < ApplicationController
     end
   end
 
-  def update 
+  def update
     if @reservation.update_attributes(secure_params(:reservation, RESERVATION_ATTR))
-      redirect_to current_restaurant, notice: 'Reservation updated successfully'
+      url_before_edit = cookies[:url_before_edit]
+      if !url_before_edit.blank?       #redirect to page previous to edit if cookies enabled (quasi-seamless update)
+        redirect_to url_before_edit, notice: 'Reservation updated successfully'
+        cookies.delete :url_before_edit
+      else  
+        redirect_to current_restaurant, notice: 'Reservation updated successfully'
+      end
     else
       flash.now['alert'] = 'Failure when updating reservation'
       render :edit
@@ -37,7 +44,7 @@ class ReservationsController < ApplicationController
 
   def destroy
     @reservation.destroy
-    redirect_to current_restaurant, notice: "Reservation canceled"
+    redirect_to request.referrer, notice: "Reservation canceled"
   end
 
   private

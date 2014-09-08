@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
     if user && user.authenticate(params[:password])
       session[:user_id] = user.id
       url_before_login = cookies[:url_before_login]
-      unless url_before_login.blank?       #redirect to page previous to login if cookies enabled (quasi-seamless login)
+      if !url_before_login.blank?       #redirect to page previous to login if cookies enabled (quasi-seamless login)
         redirect_to url_before_login, notice: "Logged in!"
         cookies.delete :url_before_login
       else  

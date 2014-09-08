@@ -1,5 +1,5 @@
 <h1>Dashboard</h1>
-<%= link_to "See all restaurants", restaurants_path, title: 'List all participating restaurants'  %>
+<%= link_to "See all restaurants sorted by cuisine", cuisines_path, title: 'List all participating restaurants by cuisine'  %>
 <%  num_reservations = @reservations.count
     if num_reservations > 0 
 %>

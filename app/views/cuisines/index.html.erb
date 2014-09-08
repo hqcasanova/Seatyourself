@@ -1,0 +1,6 @@
+<h1>Cuisines</h1>
+<ul>
+  <% @cuisines.order(:name).each do |cuisine| %>
+    <li><%= link_to cuisine.name, cuisine_path(cuisine.name), title: 'See all #{cuisine.name}' %></li>
+  <% end %>
+</ul>

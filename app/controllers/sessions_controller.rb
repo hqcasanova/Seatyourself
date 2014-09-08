@@ -1,12 +1,19 @@
 class SessionsController < ApplicationController
   def new
+    cookies[:url_before_login] = request.referrer
   end
 
   def create
     user = User.find_by(email: params[:email])
     if user && user.authenticate(params[:password])
       session[:user_id] = user.id
-      redirect_to restaurants_path, notice: "Logged in!"
+      url_before_login = cookies[:url_before_login]
+      unless url_before_login.blank?       #redirect to page previous to login if cookies enabled (quasi-seamless login)
+        redirect_to url_before_login, notice: "Logged in!"
+        cookies.delete :url_before_login
+      else  
+        redirect_to reservations_path, notice: "Logged in!"
+      end
     else
       flash.now[:alert] = "Invalid email or password"
       render "new"
@@ -15,6 +22,10 @@ class SessionsController < ApplicationController
 
   def destroy
     session[:user_id] = nil
-    redirect_to restaurants_path, notice: "Logged out!"
+    redirect_page = request.referrer 
+    if redirect_page == reservations_url
+      redirect_page = restaurants_path
+    end 
+    redirect_to redirect_page, notice: "Logged out!"
   end
 end

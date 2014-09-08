@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   # You can have the root of your site routed with "root"
   root 'pages#index'
+  get '/reservations' => 'reservations#index', as: :reservations
   resources :restaurants do 
     resources :reservations, only: [:edit, :create, :update, :destroy]
   end

@@ -1,5 +1,5 @@
 class RestaurantsController < ApplicationController
-  RESTAURANT_ATTR = [:name, :address, :business_number, :capacity]
+  RESTAURANT_ATTR = [:name, :address, :business_number, :capacity, {:cuisine_ids => []}]
   before_filter -> { load_restaurant(:id) }, only: [:show, :edit, :update, :destroy]
 
   def index

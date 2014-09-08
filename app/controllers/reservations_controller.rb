@@ -1,8 +1,16 @@
 class ReservationsController < ApplicationController
   RESERVATION_ATTR = [:date_and_time, :size]
-  before_filter -> { load_restaurant(:restaurant_id) }  #load_restaurant in application_controller
+  before_filter -> { load_restaurant(:restaurant_id) }, except: :index  #load_restaurant in application_controller
   before_filter :load_reservation, only: [:edit, :update, :destroy]
   before_filter :ensure_logged_in, only: [:create, :update, :destroy]
+
+  def index
+    if current_user
+      @reservations = current_user.reservations.order(date_and_time: :asc)
+    else
+      raise ActionController::RoutingError.new('Not Found')   #hides page from non-registered visitors
+    end
+  end
 
   def edit
   end
@@ -29,7 +37,7 @@ class ReservationsController < ApplicationController
 
   def destroy
     @reservation.destroy
-    redirect_to current_restaurant, notice: "Reservation deleted"
+    redirect_to current_restaurant, notice: "Reservation canceled"
   end
 
   private

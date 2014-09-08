@@ -30,6 +30,7 @@
         <%= login_link %><%= signup_link %>      
       <% else %>
         Signed in as <%= current_user.username %>. <%= link_to "Log out", session_path("current"), :method => :delete %>
+        <%= link_to "My reservations", reservations_path unless request.path == '/reservations' %>
       <% end %> 
     </span>
 

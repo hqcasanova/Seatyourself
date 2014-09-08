@@ -2,6 +2,16 @@
   <dl>
     <dt><%= restaurant.name %></dt>
     <dd>Address: <%= restaurant.address %></dd>
+    <% unless restaurant.business_number.blank? %>
+      <dd>Business number: <%= restaurant.business_number %></dd>
+    <% end %>
     <dd>Capacity: <%= restaurant.capacity %></dd>
+    <dd>Cuisine(s):
+      <ul>
+        <% restaurant.cuisines.pluck(:name).sort.each do |cuisine| %>
+          <li><%= cuisine %></li>
+        <% end %>
+      </ul>
+    </dd>
   </dl>
 <% end %>

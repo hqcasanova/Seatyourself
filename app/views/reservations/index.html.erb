@@ -1,0 +1,23 @@
+<h1>Dashboard</h1>
+<%= link_to "See all restaurants", restaurants_path, title: 'List all participating restaurants'  %>
+<%  num_reservations = @reservations.count
+    if num_reservations > 0 
+%>
+<h2><%= num_reservations %> reservations</h2>
+<ul>
+  <% @reservations.each do |reservation| %>
+  <li>
+    <%= link_to 'Edit', edit_restaurant_reservation_path(reservation.restaurant, reservation), title: "Change this reservation" %>
+    <%= link_to 'Cancel reservation', restaurant_reservation_path(reservation.restaurant, reservation), title: "Cancel this reservation", :'data-method' => 'delete' %>
+    <dl>
+      <dt><%= formatted_datetime(reservation.date_and_time) %></dt>
+      <dd>Number of people: <%= reservation.size %></dd>
+      <dd>Name of restaurant: <%= reservation.restaurant.name %></dd>
+      <dd>Address: <%= reservation.restaurant.address %></dd>
+    </dl>
+  </li>
+  <% end %>
+</ul>
+<% else %>
+  <h2>No reservations yet</h2>
+<% end %>

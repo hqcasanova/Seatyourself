@@ -10,7 +10,7 @@
   <% @restaurant.reservations.each do |reservation| %>
     <% if current_user && reservation.id %>
       <%= link_to 'Edit', edit_restaurant_reservation_path(@restaurant, reservation), title: "Change this reservation" %>
-      <%= link_to 'Delete', restaurant_reservation_path(@restaurant, reservation), title: "Delete this reservation", :'data-method' => 'delete' %>
+      <%= link_to 'Cancel reservation', restaurant_reservation_path(@restaurant, reservation), title: "Cancel this reservation", :'data-method' => 'delete' %>
     <% end %>
     <% if reservation.user != nil %>
       <p><%= formatted_datetime(reservation.date_and_time) %> for <%= pluralize(reservation.size, "person") %></p>

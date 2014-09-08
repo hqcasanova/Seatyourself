@@ -8,7 +8,7 @@
     <%= f.label :address %><br />
     <%= f.text_area :address %>
   </div>
-  <div>
+  <div class="field">
     <%= f.label :business_number %><br />
     <%= f.number_field :business_number %>
   </div>
@@ -16,6 +16,16 @@
     <%= f.label :capacity %><br />
     <%= f.text_field :capacity %>
   </div>
+  <fieldset>
+    <legend>Cuisine(s)</legend>
+     <%= hidden_field_tag "restaurant[cuisine_ids][]", nil %>     <!-- fallback for no checked boxes -->
+    <% Cuisine.order(:name).each do |cuisine| %>
+      <%= label_tag dom_id(cuisine) do %>
+        <%= check_box_tag dom_id(cuisine), cuisine.id, @restaurant.cuisines.include?(cuisine), :name => 'restaurant[cuisine_ids][]' %>
+        <%= cuisine.name %>
+      <% end %>
+    <% end %>
+  </fieldset>
   <div class="actions">
     <% if @restaurant.errors.any? %>
       <p class="error">Please, make sure all fields are correct before submitting</p> 
